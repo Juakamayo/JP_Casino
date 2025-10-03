@@ -1,4 +1,8 @@
 package modelo;
 
-public class TipoApuesta {
+public enum TipoApuesta {
+    ROJO,
+    NEGRO,
+    PAR,
+    IMPAR
 }

@@ -1,0 +1,91 @@
+package vista;
+
+import controlador.SessionController;
+import modelo.Usuario;
+import javax.swing.*;
+import java.awt.*;
+
+public class VentanaRegistro extends JDialog {
+
+    private JTextField txtUsuario;
+    private JPasswordField txtClave;
+    private JTextField txtNombre; // Campo para el nombre real
+    private JButton btnRegistrar;
+
+    // Recibe la ventana principal (VentanaLogin) como 'owner' para que aparezca centrada y modal
+    public VentanaRegistro(JFrame owner) {
+        super(owner, "Registro de Nuevo Usuario", true); // 'true' la hace modal
+
+        initComponents();
+        setupLayout();
+
+        // No cerrar la aplicación entera, solo la ventana de diálogo
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(owner); // Centrar respecto a la VentanaLogin
+        setVisible(true);
+    }
+
+    private void initComponents() {
+        txtUsuario = new JTextField(15);
+        txtClave = new JPasswordField(15);
+        txtNombre = new JTextField(15);
+        btnRegistrar = new JButton("Completar Registro");
+
+        // Asignamos la lógica al botón de registro
+        btnRegistrar.addActionListener(e -> registrar());
+    }
+
+    private void setupLayout() {
+        setLayout(new BorderLayout(10, 10));
+
+        // Panel para los campos (Usuario, Clave, Nombre)
+        JPanel panelForm = new JPanel(new GridLayout(3, 2, 5, 5));
+        panelForm.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
+
+        panelForm.add(new JLabel("Nombre de Usuario:"));
+        panelForm.add(txtUsuario);
+        panelForm.add(new JLabel("Clave:"));
+        panelForm.add(txtClave);
+        panelForm.add(new JLabel("Nombre Completo:"));
+        panelForm.add(txtNombre); // Agregamos el campo Nombre
+
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        panelBotones.add(btnRegistrar);
+
+        add(panelForm, BorderLayout.CENTER);
+        add(panelBotones, BorderLayout.SOUTH);
+    }
+
+    // Lógica principal de registro
+    private void registrar() {
+        String user = txtUsuario.getText().trim();
+        String pass = new String(txtClave.getPassword());
+        String name = txtNombre.getText().trim();
+
+        // 1. Validación de campos básicos
+        if (user.isEmpty() || pass.isEmpty() || name.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "Todos los campos son obligatorios.",
+                    "Error de Validación",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 2. Llamada al controlador para registrar
+        SessionController controller = SessionController.getInstance();
+
+        // **FALTA: Una validación para ver si el usuario ya existe en el controlador.
+        // Asumiendo que el controlador lo permite por ahora.**
+
+        controller.registrarUsuario(user, pass, name);
+
+        // 3. Notificación y cierre
+        JOptionPane.showMessageDialog(this,
+                "¡Registro exitoso! Ya puedes iniciar sesión.",
+                "Éxito",
+                JOptionPane.INFORMATION_MESSAGE);
+
+        dispose(); // Cierra la ventana de registro
+    }
+}
