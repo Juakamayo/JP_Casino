@@ -12,14 +12,12 @@ public class VentanaRegistro extends JDialog {
     private JTextField txtNombre; // Campo para el nombre real
     private JButton btnRegistrar;
 
-    // Recibe la ventana principal (VentanaLogin) como 'owner' para que aparezca centrada y modal
     public VentanaRegistro(JFrame owner) {
         super(owner, "Registro de Nuevo Usuario", true); // 'true' la hace modal
 
         initComponents();
         setupLayout();
 
-        // No cerrar la aplicación entera, solo la ventana de diálogo
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
         setLocationRelativeTo(owner); // Centrar respecto a la VentanaLogin

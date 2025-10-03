@@ -16,7 +16,7 @@ public class VentanaHistorial extends JDialog {
 
 
     public VentanaHistorial(JFrame owner, String nombreUsuario) {
-        super(owner, "Historial de " + nombreUsuario, true); // 'true' la hace modal
+        super(owner, "Historial de " + nombreUsuario, true);
 
         initComponents();
         cargarHistorial();
