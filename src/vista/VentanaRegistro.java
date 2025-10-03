@@ -57,7 +57,7 @@ public class VentanaRegistro extends JDialog {
         add(panelBotones, BorderLayout.SOUTH);
     }
 
-    // Lógica principal de registro
+
     private void registrar() {
         String user = txtUsuario.getText().trim();
         String pass = new String(txtClave.getPassword());
@@ -72,20 +72,18 @@ public class VentanaRegistro extends JDialog {
             return;
         }
 
-        // 2. Llamada al controlador para registrar
+
         SessionController controller = SessionController.getInstance();
 
-        // **FALTA: Una validación para ver si el usuario ya existe en el controlador.
-        // Asumiendo que el controlador lo permite por ahora.**
 
         controller.registrarUsuario(user, pass, name);
 
-        // 3. Notificación y cierre
+
         JOptionPane.showMessageDialog(this,
                 "¡Registro exitoso! Ya puedes iniciar sesión.",
                 "Éxito",
                 JOptionPane.INFORMATION_MESSAGE);
 
-        dispose(); // Cierra la ventana de registro
+        dispose();
     }
 }

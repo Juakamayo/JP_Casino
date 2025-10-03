@@ -60,7 +60,7 @@ public class VentanaLogin extends JFrame {
 
         if (usuarioLogeado != null) {
             JOptionPane.showMessageDialog(this, "Bienvenido, " + usuarioLogeado.getNombre() + "!");
-            new VentanaMenu(usuarioLogeado.getNombre());
+            new VentanaMenu(controller, usuarioLogeado.getNombre());
             dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Credenciales incorrectas", "Error", JOptionPane.ERROR_MESSAGE);

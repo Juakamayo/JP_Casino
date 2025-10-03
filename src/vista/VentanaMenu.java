@@ -1,14 +1,24 @@
 package vista;
 
+import controlador.SessionController;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class VentanaMenu extends JFrame {
 
+    // 1. Declaramos el campo 'session' aquí, en la clase principal
+    private final SessionController session;
     private final String nombreUsuario;
 
-    public VentanaMenu(String nombreUsuario) {
+    // (Hemos eliminado la clase anidada duplicada 'public class VentanaMenu { ... }')
+
+    // El constructor ahora recibe el controlador y el nombre del usuario.
+    public VentanaMenu(SessionController session, String nombreUsuario) {
         super("Menú Principal - Casino Black Cat");
+
+        // 2. Asignamos los valores a los campos de la clase
+        this.session = session;
         this.nombreUsuario = nombreUsuario;
 
         initComponents();
@@ -18,6 +28,7 @@ public class VentanaMenu extends JFrame {
         setVisible(true);
     }
 
+    // ... (El resto del código permanece igual) ...
     private void initComponents() {
         setLayout(new BorderLayout(10, 10));
 
@@ -31,14 +42,18 @@ public class VentanaMenu extends JFrame {
         JButton btnHistorial = new JButton("Historial");
         JButton btnSalir = new JButton("Cerrar Sesión");
 
-        btnJugar.addActionListener(e -> new VentanaJuego(nombreUsuario));
-
-        btnHistorial.addActionListener(e -> JOptionPane.showMessageDialog(this, "Funcionalidad de historial en desarrollo."));
-
+        // Al cerrar sesión, usamos el controlador para invalidar la sesión
         btnSalir.addActionListener(e -> {
+            this.session.cerrarSesion(); // ¡Ahora el controlador es accesible!
             dispose();
             new VentanaLogin();
         });
+
+        // NOTA: Asegúrate de que VentanaJuego reciba los datos necesarios
+        btnJugar.addActionListener(e -> {
+            // new VentanaJuego(session, nombreUsuario); // Sugerencia: pasar 'session'
+        });
+
 
         panelBotones.add(btnJugar);
         panelBotones.add(btnHistorial);

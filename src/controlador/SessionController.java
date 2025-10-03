@@ -29,7 +29,7 @@ public class SessionController {
                 return usuario;
             }
         }
-        return null; // Credenciales incorrectas
+        return null;
     }
 
     public void registrarUsuario(String u, String p, String n) {
