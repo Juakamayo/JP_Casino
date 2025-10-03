@@ -9,18 +9,18 @@ public class VentanaRegistro extends JDialog {
 
     private JTextField txtUsuario;
     private JPasswordField txtClave;
-    private JTextField txtNombre; // Campo para el nombre real
+    private JTextField txtNombre;
     private JButton btnRegistrar;
 
     public VentanaRegistro(JFrame owner) {
-        super(owner, "Registro de Nuevo Usuario", true); // 'true' la hace modal
+        super(owner, "Registro de Nuevo Usuario", true);
 
         initComponents();
         setupLayout();
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
-        setLocationRelativeTo(owner); // Centrar respecto a la VentanaLogin
+        setLocationRelativeTo(owner);
         setVisible(true);
     }
 
@@ -46,7 +46,7 @@ public class VentanaRegistro extends JDialog {
         panelForm.add(new JLabel("Clave:"));
         panelForm.add(txtClave);
         panelForm.add(new JLabel("Nombre Completo:"));
-        panelForm.add(txtNombre); // Agregamos el campo Nombre
+        panelForm.add(txtNombre);
 
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         panelBotones.add(btnRegistrar);
@@ -61,7 +61,7 @@ public class VentanaRegistro extends JDialog {
         String pass = new String(txtClave.getPassword());
         String name = txtNombre.getText().trim();
 
-        // 1. Validación de campos básicos
+
         if (user.isEmpty() || pass.isEmpty() || name.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Todos los campos son obligatorios.",

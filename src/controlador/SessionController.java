@@ -7,7 +7,7 @@ import java.util.List;
 public class SessionController {
 
     private final List<Usuario> usuarios = new ArrayList<>();
-    private Usuario usuarioActual; // Solo un usuario a la vez
+    private Usuario usuarioActual;
 
     private static final SessionController INSTANCE = new SessionController();
 

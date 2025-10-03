@@ -36,7 +36,7 @@ public class VentanaJuego extends JFrame {
         lblSaldo = new JLabel("Saldo: $" + saldo, SwingConstants.CENTER);
         lblResultado = new JLabel("Listo para jugar!", SwingConstants.CENTER);
         btnGirar = new JButton("Girar");
-        btnGirar.addActionListener(e -> jugarRonda()); // <-- Se le asigna la acción
+        btnGirar.addActionListener(e -> jugarRonda());
     }
 
     private void setupLayout() {
@@ -88,8 +88,7 @@ public class VentanaJuego extends JFrame {
         }
 
         int numeroGirado = ruleta.girarRuleta();
-        boolean acierto = ruleta.evaluarResultado(numeroGirado, tipoApuestaEnum); // <-- Ahora tipoApuestaEnum funciona
-
+        boolean acierto = ruleta.evaluarResultado(numeroGirado, tipoApuestaEnum);
         if (acierto) {
             saldo += monto;
             lblResultado.setText("¡GANASTE! Número: " + numeroGirado + ". Saldo: $" + saldo);
