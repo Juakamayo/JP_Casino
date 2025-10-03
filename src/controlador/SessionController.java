@@ -32,6 +32,12 @@ public class SessionController {
         return null;
     }
 
+    public Usuario getUsuarioActual() {
+        return usuarioActual;
+    }
+
+
+
     public void registrarUsuario(String u, String p, String n) {
         Usuario nuevoUsuario = new Usuario(u, p, n);
         usuarios.add(nuevoUsuario);

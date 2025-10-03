@@ -1,20 +1,42 @@
 package modelo;
 import modelo.Usuario;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class Resultado {
-    public Resultado(int i, String rojo, boolean b, int i1, TipoApuesta tipoApuesta) {
-        Usuario u = new Usuario("pepe", "123", "Pepe");
-        Resultado r = new Resultado(7, "ROJO", true, 1200, TipoApuesta.ROJO);
-        u.agregarResultado(r);
-        System.out.println(u.getHistorial().size());
+
+    private final int numeroGanador;
+    private final int numeroApostado;
+    private final double montoApostado;
+    private final double montoGanado;
+    private final boolean gano;
 
 
+    public Resultado(int numeroGanador, int numeroApostado, double montoApostado, double montoGanado, boolean gano){
+        this.numeroGanador = numeroGanador;
+        this.numeroApostado = numeroApostado;
+        this.montoApostado = montoApostado;
+        this.montoGanado = montoGanado;
+        this.gano = gano;
+    }
 
-    };
+
+    public int getNumeroGanador(){
+        return numeroGanador;
+    }
+    public int getNumeroApostado(){
+        return numeroApostado;
+    }
+    public double getMontoApostado(){
+        return montoApostado;
+    }
+    public double getMontoGanado(){
+        return montoGanado;
+    }
+    public boolean getGano(){
+        return gano;
+    }
+    }
 
 
-
-
-
-}

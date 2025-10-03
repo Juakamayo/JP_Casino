@@ -19,7 +19,6 @@ public class Ruleta {
         return rng.nextInt(37); // Números de 0 a 36
     }
 
-    // Ahora recibe el ENUM TipoApuesta
     public boolean evaluarResultado(int numero, TipoApuesta tipoApuesta) {
         if (numero == 0) return false;
 
@@ -40,9 +39,6 @@ public class Ruleta {
         }
     }
 
-    // Getters
-
-    // Este getter es necesario si otra clase (Controlador) necesita el historial
     public int getHistorialSize() {
         return historialSize;
     }
@@ -51,5 +47,4 @@ public class Ruleta {
         return historialNumeros;
     }
 
-    // ¿Más getters?
 }
