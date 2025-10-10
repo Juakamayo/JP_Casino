@@ -9,9 +9,9 @@ public class ResultadoController {
 
     private final SessionController sessionController;
 
-    public ResultadoController() {
 
-        this.sessionController = SessionController.getInstance();
+    public ResultadoController(SessionController sessionController) {
+        this.sessionController = sessionController;
     }
 
 
@@ -19,13 +19,12 @@ public class ResultadoController {
         Usuario usuario = sessionController.getUsuarioActual();
         if (usuario != null) {
             usuario.agregarResultado(resultado);
-
         }
     }
+
     public List<Resultado> recuperarHistorial(){
         Usuario usuario = sessionController.getUsuarioActual();
         if (usuario != null) {
-
             return usuario.getHistorial();
         }
         return Collections.emptyList();

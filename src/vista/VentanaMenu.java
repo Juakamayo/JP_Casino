@@ -1,5 +1,6 @@
 package vista;
 
+import controlador.ResultadoController;
 import controlador.SessionController;
 
 import javax.swing.*;
@@ -7,16 +8,17 @@ import java.awt.*;
 
 public class VentanaMenu extends JFrame {
 
-    private final SessionController session;
+    private final SessionController sessionController;
+    private final ResultadoController resultadoController;
     private final String nombreUsuario;
 
 
 
-    public VentanaMenu(SessionController session, String nombreUsuario) {
+    public VentanaMenu(SessionController sessionController, ResultadoController resultadoController, String nombreUsuario) {
         super("Menú Principal - Casino Black Cat");
 
-
-        this.session = session;
+        this.sessionController = sessionController;
+        this.resultadoController = resultadoController;
         this.nombreUsuario = nombreUsuario;
 
         initComponents();
@@ -42,23 +44,22 @@ public class VentanaMenu extends JFrame {
 
 
         btnSalir.addActionListener(e -> {
-            this.session.cerrarSesion();
+            this.sessionController.cerrarSesion();
             dispose();
-            new VentanaLogin();
+
+            new VentanaLogin(sessionController);
         });
 
-        btnJugar.addActionListener(e -> {
-            this.session.cerrarSesion();
-            dispose();
-            new VentanaJuego(nombreUsuario);
 
+        btnJugar.addActionListener(e -> {
+            dispose();
+
+            new VentanaJuego(nombreUsuario, sessionController, resultadoController);
         });
 
         btnHistorial.addActionListener(e -> {
-            this.session.cerrarSesion();
-            dispose();
-            new VentanaHistorial(this, this.nombreUsuario);
 
+            new VentanaHistorial(this, this.nombreUsuario, resultadoController);
         });
 
 

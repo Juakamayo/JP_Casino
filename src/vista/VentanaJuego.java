@@ -1,11 +1,16 @@
 package vista;
 
+import controlador.ResultadoController;
+import controlador.SessionController;
 import modelo.Ruleta;
 import modelo.TipoApuesta;
 import javax.swing.*;
 import java.awt.*;
 
 public class VentanaJuego extends JFrame {
+
+    private final SessionController sessionController;
+    private final ResultadoController resultadoController;
 
     private final Ruleta ruleta;
     private final String nombreJugador;
@@ -16,15 +21,18 @@ public class VentanaJuego extends JFrame {
     private JLabel lblSaldo;
     private JLabel lblResultado;
     private JButton btnGirar;
+    private JButton btnVolver;
 
-    public VentanaJuego(String nombreJugador) {
+    public VentanaJuego(String nombreJugador, SessionController sessionController, ResultadoController resultadoController) {
         super("Ruleta - Casino Black Cat");
         this.nombreJugador = nombreJugador;
         this.ruleta = new Ruleta();
 
+        this.sessionController = sessionController;
+        this.resultadoController = resultadoController;
+
         initComponents();
         setupLayout();
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -37,6 +45,8 @@ public class VentanaJuego extends JFrame {
         lblResultado = new JLabel("Listo para jugar!", SwingConstants.CENTER);
         btnGirar = new JButton("Girar");
         btnGirar.addActionListener(e -> jugarRonda());
+        btnVolver = new JButton("Volver");
+        btnVolver.addActionListener(e -> volverMenu());
     }
 
     private void setupLayout() {
@@ -53,12 +63,21 @@ public class VentanaJuego extends JFrame {
         panelResultados.add(lblSaldo);
         panelResultados.add(lblResultado);
 
+        panelPrincipal.add(btnVolver, BorderLayout.NORTH);
         panelPrincipal.add(panelInputs, BorderLayout.NORTH);
-        panelPrincipal.add(btnGirar, BorderLayout.CENTER); // <-- ¡Se agrega la variable!
+        panelPrincipal.add(btnGirar, BorderLayout.CENTER);
         panelPrincipal.add(panelResultados, BorderLayout.SOUTH);
 
         add(panelPrincipal);
     }
+
+    private void volverMenu() {
+        dispose();
+        new VentanaMenu(sessionController, resultadoController, nombreJugador);
+
+    }
+
+
 
 
 

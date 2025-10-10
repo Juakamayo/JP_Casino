@@ -1,5 +1,6 @@
 package vista;
 
+import controlador.ResultadoController;
 import controlador.SessionController;
 import modelo.Usuario;
 import javax.swing.*;
@@ -7,13 +8,18 @@ import java.awt.*;
 
 public class VentanaLogin extends JFrame {
 
+    private final SessionController sessionController;
+
     private JTextField txtUsuario;
     private JPasswordField txtClave;
     private JButton btnIngresar;
     private JButton btnRegistrar;
 
-    public VentanaLogin() {
+
+    public VentanaLogin(SessionController controller) {
         super("Login - Casino Black Cat");
+
+        this.sessionController = controller;
 
         initComponents();
         setupLayout();
@@ -30,7 +36,8 @@ public class VentanaLogin extends JFrame {
         btnRegistrar = new JButton("Registrar");
 
         btnIngresar.addActionListener(e -> login());
-        btnRegistrar.addActionListener(e -> new VentanaRegistro(this));
+
+        btnRegistrar.addActionListener(e -> new VentanaRegistro(this, sessionController));
     }
 
     private void setupLayout() {
@@ -55,12 +62,14 @@ public class VentanaLogin extends JFrame {
         String user = txtUsuario.getText();
         String pass = new String(txtClave.getPassword());
 
-        SessionController controller = SessionController.getInstance();
-        Usuario usuarioLogeado = controller.iniciarSesion(user, pass);
+        Usuario usuarioLogeado = this.sessionController.iniciarSesion(user, pass);
 
         if (usuarioLogeado != null) {
             JOptionPane.showMessageDialog(this, "Bienvenido, " + usuarioLogeado.getNombre() + "!");
-            new VentanaMenu(controller, usuarioLogeado.getNombre());
+
+            ResultadoController resultadoController = new ResultadoController(sessionController);
+
+            new VentanaMenu(sessionController, resultadoController, usuarioLogeado.getNombre());
             dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Credenciales incorrectas", "Error", JOptionPane.ERROR_MESSAGE);

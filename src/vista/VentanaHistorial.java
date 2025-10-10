@@ -1,8 +1,8 @@
 package vista;
 
-
 import controlador.ResultadoController;
 import modelo.Resultado;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,13 +11,16 @@ import java.util.List;
 
 public class VentanaHistorial extends JDialog {
 
-    private final ResultadoController controller = new ResultadoController();
+    private final ResultadoController controller;
+
     private JList<Resultado> listaHistorial;
     private DefaultListModel<Resultado> listModel;
 
+    public VentanaHistorial(JFrame owner, String nombreUsuario, ResultadoController resultadoController) {
 
-    public VentanaHistorial(JFrame owner, String nombreUsuario) {
         super(owner, "Historial de " + nombreUsuario, true);
+
+        this.controller = resultadoController;
 
         initComponents();
         cargarHistorial();
@@ -32,8 +35,6 @@ public class VentanaHistorial extends JDialog {
     private void initComponents() {
         listModel = new DefaultListModel<>();
         listaHistorial = new JList<>(listModel);
-
-
         listaHistorial.setFont(new Font("Monospaced", Font.PLAIN, 12));
     }
 
@@ -45,33 +46,33 @@ public class VentanaHistorial extends JDialog {
 
         JScrollPane scrollPane = new JScrollPane(listaHistorial);
 
-        JButton btnCerrar = new JButton("Cerrar");
-        btnCerrar.addActionListener(e -> volverMenu());
+
+        JButton btnVolver = new JButton("Volver al Menú");
+
+
+        btnVolver.addActionListener(e -> dispose());
+
 
         JPanel panelSur = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        panelSur.add(btnCerrar);
+        panelSur.add(btnVolver);
 
         add(titulo, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
         add(panelSur, BorderLayout.SOUTH);
     }
-    private void volverMenu() {}
-
-
 
     private void cargarHistorial() {
         List<Resultado> historial = controller.recuperarHistorial();
         listModel.clear();
 
         if (historial.isEmpty()) {
-            listModel.addElement(new Resultado(0, 0, 0, 0, false));
 
-            listModel.set(0, new Resultado(0, 0, 0, 0, false) {
+            listModel.addElement(new Resultado(0, 0, 0, 0, false) {
+                @Override
                 public String toString() { return "Aún no tienes jugadas registradas."; }
             });
             return;
         }
-
 
         List<Resultado> historialReverso = new ArrayList<>(historial);
         Collections.reverse(historialReverso);

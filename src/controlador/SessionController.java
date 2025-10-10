@@ -9,17 +9,11 @@ public class SessionController {
     private final List<Usuario> usuarios = new ArrayList<>();
     private Usuario usuarioActual;
 
-    private static final SessionController INSTANCE = new SessionController();
 
-    private SessionController() {
+    public SessionController() {
         usuarios.add(new Usuario("Juakamayo", "1234", "Juakamayo"));
         usuarios.add(new Usuario("admin", "admin", "Administrador"));
     }
-
-    public static SessionController getInstance() {
-        return INSTANCE;
-    }
-
 
 
     public Usuario iniciarSesion(String u, String p) {
@@ -35,8 +29,6 @@ public class SessionController {
     public Usuario getUsuarioActual() {
         return usuarioActual;
     }
-
-
 
     public void registrarUsuario(String u, String p, String n) {
         Usuario nuevoUsuario = new Usuario(u, p, n);

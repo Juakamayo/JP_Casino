@@ -7,13 +7,21 @@ import java.awt.*;
 
 public class VentanaRegistro extends JDialog {
 
+
+    private final SessionController sessionController;
+
     private JTextField txtUsuario;
     private JPasswordField txtClave;
     private JTextField txtNombre;
     private JButton btnRegistrar;
 
-    public VentanaRegistro(JFrame owner) {
+
+
+    public VentanaRegistro(JFrame owner, SessionController controller) {
         super(owner, "Registro de Nuevo Usuario", true);
+
+
+        this.sessionController = controller;
 
         initComponents();
         setupLayout();
@@ -24,20 +32,21 @@ public class VentanaRegistro extends JDialog {
         setVisible(true);
     }
 
+
+
     private void initComponents() {
         txtUsuario = new JTextField(15);
         txtClave = new JPasswordField(15);
         txtNombre = new JTextField(15);
         btnRegistrar = new JButton("Completar Registro");
 
-        // Asignamos la lógica al botón de registro
         btnRegistrar.addActionListener(e -> registrar());
     }
 
     private void setupLayout() {
         setLayout(new BorderLayout(10, 10));
 
-        // Panel para los campos (Usuario, Clave, Nombre)
+
         JPanel panelForm = new JPanel(new GridLayout(3, 2, 5, 5));
         panelForm.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
 
@@ -71,11 +80,7 @@ public class VentanaRegistro extends JDialog {
         }
 
 
-        SessionController controller = SessionController.getInstance();
-
-
-        controller.registrarUsuario(user, pass, name);
-
+        this.sessionController.registrarUsuario(user, pass, name);
 
         JOptionPane.showMessageDialog(this,
                 "¡Registro exitoso! Ya puedes iniciar sesión.",
