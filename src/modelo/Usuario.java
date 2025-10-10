@@ -34,8 +34,6 @@ public class Usuario {
         historial.add(r);
     }
 
-
-
     public List<Resultado> getHistorial(){
         return Collections.unmodifiableList(historial);
     }

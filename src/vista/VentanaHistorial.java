@@ -1,5 +1,6 @@
 package vista;
 
+
 import controlador.ResultadoController;
 import modelo.Resultado;
 import javax.swing.*;
@@ -45,7 +46,7 @@ public class VentanaHistorial extends JDialog {
         JScrollPane scrollPane = new JScrollPane(listaHistorial);
 
         JButton btnCerrar = new JButton("Cerrar");
-        btnCerrar.addActionListener(e -> dispose());
+        btnCerrar.addActionListener(e -> volverMenu());
 
         JPanel panelSur = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panelSur.add(btnCerrar);
@@ -54,6 +55,9 @@ public class VentanaHistorial extends JDialog {
         add(scrollPane, BorderLayout.CENTER);
         add(panelSur, BorderLayout.SOUTH);
     }
+    private void volverMenu() {}
+
+
 
     private void cargarHistorial() {
         List<Resultado> historial = controller.recuperarHistorial();
