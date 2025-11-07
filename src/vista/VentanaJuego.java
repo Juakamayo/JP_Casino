@@ -2,6 +2,7 @@ package vista;
 
 import controlador.ResultadoController;
 import controlador.SessionController;
+import modelo.Resultado;
 import modelo.Ruleta;
 import modelo.TipoApuesta;
 import javax.swing.*;
@@ -59,14 +60,21 @@ public class VentanaJuego extends JFrame {
         panelInputs.add(new JLabel("Monto:"));
         panelInputs.add(txtMonto);
 
+        JPanel panelControles = new JPanel(new BorderLayout(5, 5));
+
+        JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
+        panelBotones.add(btnGirar);
+        panelBotones.add(btnVolver);
+
         JPanel panelResultados = new JPanel(new GridLayout(2, 1, 5, 5));
         panelResultados.add(lblSaldo);
         panelResultados.add(lblResultado);
 
-        panelPrincipal.add(btnVolver, BorderLayout.NORTH);
+        panelControles.add(panelBotones, BorderLayout.NORTH);
+        panelControles.add(panelResultados, BorderLayout.CENTER);
+
         panelPrincipal.add(panelInputs, BorderLayout.NORTH);
-        panelPrincipal.add(btnGirar, BorderLayout.CENTER);
-        panelPrincipal.add(panelResultados, BorderLayout.SOUTH);
+        panelPrincipal.add(panelControles, BorderLayout.SOUTH);
 
         add(panelPrincipal);
     }
@@ -86,6 +94,7 @@ public class VentanaJuego extends JFrame {
         int monto = 0;
         String tipoApuestaString = "";
         TipoApuesta tipoApuestaEnum = null;
+        double montoGanado = 0;
 
         try {
             monto = Integer.parseInt(txtMonto.getText());
@@ -117,6 +126,7 @@ public class VentanaJuego extends JFrame {
         }
 
         lblSaldo.setText("Saldo: $" + saldo);
-        ruleta.registrarResultado(numeroGirado, tipoApuestaString, acierto);
+        Resultado resultado = new Resultado(numeroGirado, 0, monto, montoGanado, acierto);
+        resultadoController.guardarResultado(resultado);
     }
 }

@@ -37,6 +37,13 @@ public class Resultado {
     public boolean getGano(){
         return gano;
     }
+
+    public String toString() {
+        String estado = gano ? "GANADA" : "PERDIDA";
+        String gananciaStr = gano ? String.format("+ $%.2f", getMontoGanado() - getMontoApostado()) : String.format("- $%.2f", getMontoApostado());
+
+        return String.format("%-8s | Número Ganador: %2d | Apostado: $%.2f | Resultado: %s", estado, numeroGanador, montoApostado, gananciaStr);
+    }
     }
 
 
