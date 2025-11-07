@@ -1,10 +1,10 @@
 package modelo;
-import modelo.Usuario;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.io.Serializable;
 
 
-public class Resultado {
+public class Resultado implements Serializable {
+
+
 
     private final int numeroGanador;
     private final int numeroApostado;

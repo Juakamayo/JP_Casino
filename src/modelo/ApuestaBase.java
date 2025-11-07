@@ -1,6 +1,9 @@
 package modelo;
 
-public abstract class ApuestaBase {
+import java.io.Serializable;
+
+public abstract class ApuestaBase implements Serializable {
+
 
     protected final double montoApostado;
     protected final String etiqueta;

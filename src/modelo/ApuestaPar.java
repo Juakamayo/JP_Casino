@@ -3,7 +3,7 @@ package modelo;
 public class ApuestaPar extends ApuestaBase {
 
     public ApuestaPar(double montoApostado) {
-        super(montoApostado, "Par");
+        super(montoApostado, "PAR");
     }
 
 

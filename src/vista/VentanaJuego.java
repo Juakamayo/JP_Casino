@@ -9,6 +9,11 @@ import modelo.TipoApuesta;
 import javax.swing.*;
 import java.awt.*;
 import modelo.Resultado;
+import modelo.ApuestaBase;
+import modelo.ApuestaRojo;
+import modelo.ApuestaNegro;
+import modelo.ApuestaPar;
+import modelo.ApuestaImpar;
 
 public class VentanaJuego extends JFrame {
 
@@ -92,15 +97,29 @@ public class VentanaJuego extends JFrame {
 
     private void jugarRonda() {
 
-        int monto = 0;
+        double monto = 0;
         String tipoApuestaString = "";
-        TipoApuesta tipoApuestaEnum = null;
-        double montoGanado = 0;
+        ApuestaBase apuesta = null;
+
 
         try {
-            monto = Integer.parseInt(txtMonto.getText());
+            monto = Double.parseDouble(txtMonto.getText());
             tipoApuestaString = (String) cmbTipoApuesta.getSelectedItem();
-            tipoApuestaEnum = TipoApuesta.valueOf(tipoApuestaString.toUpperCase());
+
+            switch (tipoApuestaString) {
+                case "Rojo":
+                    apuesta = new ApuestaRojo(monto);
+                    break;
+                case "Negro":
+                    apuesta = new ApuestaNegro(monto);
+                    break;
+                case "Par":
+                    apuesta = new ApuestaPar(monto);
+                    break;
+                case "Impar":
+                    apuesta = new ApuestaImpar(monto);
+                    break;
+            }
 
         } catch (NumberFormatException e) {
 
@@ -110,11 +129,15 @@ public class VentanaJuego extends JFrame {
             JOptionPane.showMessageDialog(this, "Error en el tipo de apuesta seleccionada.");
             return;
         }
-        Resultado resultadoRonda = juegoController.ejecutarRonda(monto, tipoApuestaEnum);
 
-        lblSaldo.setText("Saldo; $" + juegoController.getSaldoActual());
+        Resultado resultadoRonda = juegoController.ejecutarRonda(apuesta);
+
+        lblSaldo.setText("Saldo: $" + String.format("%.2f", juegoController.getSaldoActual()));
+
+
         String mensajeResultado = resultadoRonda.getGano() ?
-                "GANASTE numero: " + resultadoRonda.getNumeroGanador() + ", Saldo: $" + juegoController.getSaldoActual():
-                "PERDISTE numero: " + resultadoRonda.getNumeroGanador() + ", Saldo: $" + juegoController.getSaldoActual();
+                "GANASTE numero: " + resultadoRonda.getNumeroGanador() + ". Saldo: $" + String.format("%.2f", juegoController.getSaldoActual()) :
+                "PERDISTE numero: " + resultadoRonda.getNumeroGanador() + ". Saldo: $" + String.format("%.2f", juegoController.getSaldoActual());
+        lblResultado.setText(mensajeResultado);
     }
 }

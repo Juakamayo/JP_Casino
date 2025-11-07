@@ -1,8 +1,9 @@
 package controlador;
 
 import modelo.Ruleta;
-import modelo.TipoApuesta;
-import modelo.Resultado; // Importar la clase Resultado
+
+import modelo.Resultado;
+import modelo.ApuestaBase;
 
 public class JuegoController {
 
@@ -16,41 +17,37 @@ public class JuegoController {
         this.resultadoController = resultadoController; // Asignar el resultadoController
     }
 
-    public int getSaldoActual() {
+    public double getSaldoActual() {
         return saldoActual;
     }
 
+    public Resultado ejecutarRonda(ApuestaBase apuesta) {
+        double montoApostado = apuesta.getMontoApostado();
 
-    public Resultado ejecutarRonda(int montoApostado, TipoApuesta tipoApuestaEnum) {
+
+
         if (montoApostado <= 0 || montoApostado > saldoActual) {
-            // Esto debería ser validado en la UI, pero lo incluimos por seguridad
-            throw new IllegalArgumentException("Monto inválido o insuficiente.");
+            throw new  IllegalArgumentException("Monto no valido");
         }
 
         int numeroGirado = ruleta.girarRuleta();
-        boolean acierto = ruleta.evaluarResultado(numeroGirado, tipoApuestaEnum);
+        String colorGirado = ruleta.obtenerColor(numeroGirado);
+
+        boolean acierto = apuesta.acierta(numeroGirado, colorGirado);
         double montoGanado = 0;
 
         if (acierto) {
-            montoGanado = montoApostado * 2; // Recuperas lo apostado + monto igual
-            saldoActual += montoApostado; // Solo se suma el beneficio, ya que el monto apostado "volvió"
+            montoGanado = montoApostado;
+            montoGanado += montoApostado;
         } else {
             saldoActual -= montoApostado;
             montoGanado = 0;
         }
 
-        // Crear el objeto Resultado
-        Resultado resultado = new Resultado(
-                numeroGirado,
-                0, // Aquí iría el número apostado si fuera una apuesta numérica directa
-                montoApostado,
-                montoGanado,
-                acierto
-        );
 
-        // Guardar el resultado en el historial del usuario a través del ResultadoController
+        Resultado resultado = new Resultado(numeroGirado, 0, montoApostado, montoGanado, acierto);
+
         resultadoController.guardarResultado(resultado);
-
-        return resultado; // Devolver el resultado de la ronda para que la UI lo muestre
+        return resultado;
     }
 }
