@@ -24,10 +24,10 @@ public class VentanaMenu extends JFrame {
         initComponents();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Listener para cuando se cierre
+
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
+
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                 sessionController.guardarUsuarios();
                 dispose();

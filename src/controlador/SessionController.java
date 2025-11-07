@@ -46,9 +46,9 @@ public class SessionController {
     public void guardarUsuarios() {
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(USUARIOS))) {
-
             oos.writeObject(usuarios);
             System.out.println("Usuarios guardados exitosamente en " + USUARIOS);
+
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Error al guardar los usuarios.");

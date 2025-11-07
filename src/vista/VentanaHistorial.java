@@ -26,7 +26,7 @@ public class VentanaHistorial extends JDialog {
         cargarHistorial();
         setupLayout();
 
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(600, 450);
         setLocationRelativeTo(owner);
         setVisible(true);
@@ -68,7 +68,6 @@ public class VentanaHistorial extends JDialog {
         if (historial.isEmpty()) {
 
             listModel.addElement(new Resultado(0, 0, 0, 0, false) {
-                @Override
                 public String toString() { return "Aún no tienes jugadas registradas."; }
             });
             return;

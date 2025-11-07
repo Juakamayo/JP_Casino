@@ -5,8 +5,12 @@ import modelo.Ruleta;
 import modelo.Resultado;
 import modelo.ApuestaBase;
 import modelo.Usuario;
+import vista.VentanaJuego;
 
-public class JuegoController {
+import javax.swing.*;
+import java.awt.*;
+
+public class JuegoController extends Component {
 
     private final Ruleta ruleta;
     private final ResultadoController resultadoController;
@@ -33,6 +37,7 @@ public class JuegoController {
 
         if (montoApostado <= 0 || montoApostado > usuario.getSaldo()) {
             throw new  IllegalArgumentException("Monto no valido");
+
         }
 
         int numeroGirado = ruleta.girarRuleta();

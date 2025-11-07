@@ -48,6 +48,8 @@ public class VentanaJuego extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
 
     private void initComponents() {
@@ -90,6 +92,8 @@ public class VentanaJuego extends JFrame {
         add(panelPrincipal);
     }
 
+
+
     private void volverMenu() {
         dispose();
         new VentanaMenu(sessionController, resultadoController, nombreJugador);
@@ -123,22 +127,32 @@ public class VentanaJuego extends JFrame {
             }
 
         } catch (NumberFormatException e) {
-
             JOptionPane.showMessageDialog(this, "Por favor, ingresa un monto válido (solo números).");
             return;
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, "Error en el tipo de apuesta seleccionada.");
             return;
         }
+        try{
+            VentanaJuego VentanaJuego = null;
+            Resultado resultadoRonda = juegoController.ejecutarRonda(apuesta);
 
-        Resultado resultadoRonda = juegoController.ejecutarRonda(apuesta);
-
-        lblSaldo.setText("Saldo: $" + String.format("%.2f", juegoController.getSaldoActual()));
 
 
-        String mensajeResultado = resultadoRonda.getGano() ?
-                "GANASTE numero: " + resultadoRonda.getNumeroGanador() + ". Saldo: $" + String.format("%.2f", juegoController.getSaldoActual()) :
-                "PERDISTE numero: " + resultadoRonda.getNumeroGanador() + ". Saldo: $" + String.format("%.2f", juegoController.getSaldoActual());
-        lblResultado.setText(mensajeResultado);
+
+            lblSaldo.setText("Saldo: $" + String.format("%.2f", juegoController.getSaldoActual()));
+
+
+            String mensajeResultado = resultadoRonda.getGano() ?
+                    "GANASTE numero: " + resultadoRonda.getNumeroGanador() + ". Saldo: $" + String.format("%.2f", juegoController.getSaldoActual()) :
+                    "PERDISTE numero: " + resultadoRonda.getNumeroGanador() + ". Saldo: $" + String.format("%.2f", juegoController.getSaldoActual());
+
+            lblResultado.setText(mensajeResultado);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error de Apuesta", JOptionPane.ERROR_MESSAGE);
+        }
+
+
+
     }
 }
