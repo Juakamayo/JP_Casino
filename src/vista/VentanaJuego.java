@@ -3,17 +3,11 @@ package vista;
 import controlador.JuegoController;
 import controlador.ResultadoController;
 import controlador.SessionController;
-import modelo.Resultado;
-import modelo.Ruleta;
-import modelo.TipoApuesta;
+import modelo.*;
+
 import javax.swing.*;
 import java.awt.*;
 import modelo.Resultado;
-import modelo.ApuestaBase;
-import modelo.ApuestaRojo;
-import modelo.ApuestaNegro;
-import modelo.ApuestaPar;
-import modelo.ApuestaImpar;
 
 public class VentanaJuego extends JFrame {
 
@@ -54,7 +48,7 @@ public class VentanaJuego extends JFrame {
 
     private void initComponents() {
         txtMonto = new JTextField(10);
-        cmbTipoApuesta = new JComboBox<>(new String[]{"Rojo", "Negro", "Par", "Impar"});
+        cmbTipoApuesta = new JComboBox<>(new String[]{"Rojo", "Negro", "Par", "Impar", "Verde"});
         lblSaldo = new JLabel("Saldo: $" + juegoController.getSaldoActual(), SwingConstants.CENTER);
         lblResultado = new JLabel("Listo para jugar!", SwingConstants.CENTER);
         btnGirar = new JButton("Girar");
@@ -123,6 +117,9 @@ public class VentanaJuego extends JFrame {
                     break;
                 case "Impar":
                     apuesta = new ApuestaImpar(monto);
+                    break;
+                case "Verde":
+                    apuesta = new ApuestaVerde(monto);
                     break;
             }
 

@@ -26,7 +26,7 @@ public class VentanaRegistro extends JDialog {
         initComponents();
         setupLayout();
 
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
         setLocationRelativeTo(owner);
         setVisible(true);

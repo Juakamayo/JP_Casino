@@ -26,7 +26,7 @@ public class VentanaHistorial extends JDialog {
         cargarHistorial();
         setupLayout();
 
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(600, 450);
         setLocationRelativeTo(owner);
         setVisible(true);
