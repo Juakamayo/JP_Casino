@@ -1,5 +1,6 @@
 package vista;
 
+import controlador.JuegoController;
 import controlador.ResultadoController;
 import controlador.SessionController;
 import modelo.Resultado;
@@ -7,15 +8,17 @@ import modelo.Ruleta;
 import modelo.TipoApuesta;
 import javax.swing.*;
 import java.awt.*;
+import modelo.Resultado;
 
 public class VentanaJuego extends JFrame {
 
     private final SessionController sessionController;
     private final ResultadoController resultadoController;
+    private final JuegoController juegoController;
+
 
     private final Ruleta ruleta;
     private final String nombreJugador;
-    private int saldo = 1000;
 
     private JTextField txtMonto;
     private JComboBox<String> cmbTipoApuesta;
@@ -32,6 +35,8 @@ public class VentanaJuego extends JFrame {
         this.sessionController = sessionController;
         this.resultadoController = resultadoController;
 
+        this.juegoController = new JuegoController(1000, resultadoController);
+
         initComponents();
         setupLayout();
         pack();
@@ -42,7 +47,7 @@ public class VentanaJuego extends JFrame {
     private void initComponents() {
         txtMonto = new JTextField(10);
         cmbTipoApuesta = new JComboBox<>(new String[]{"Rojo", "Negro", "Par", "Impar"});
-        lblSaldo = new JLabel("Saldo: $" + saldo, SwingConstants.CENTER);
+        lblSaldo = new JLabel("Saldo: $" + juegoController.getSaldoActual(), SwingConstants.CENTER);
         lblResultado = new JLabel("Listo para jugar!", SwingConstants.CENTER);
         btnGirar = new JButton("Girar");
         btnGirar.addActionListener(e -> jugarRonda());
@@ -85,10 +90,6 @@ public class VentanaJuego extends JFrame {
 
     }
 
-
-
-
-
     private void jugarRonda() {
 
         int monto = 0;
@@ -109,24 +110,11 @@ public class VentanaJuego extends JFrame {
             JOptionPane.showMessageDialog(this, "Error en el tipo de apuesta seleccionada.");
             return;
         }
+        Resultado resultadoRonda = juegoController.ejecutarRonda(monto, tipoApuestaEnum);
 
-        if (monto <= 0 || monto > saldo) {
-            JOptionPane.showMessageDialog(this, "Monto inválido o insuficiente.");
-            return;
-        }
-
-        int numeroGirado = ruleta.girarRuleta();
-        boolean acierto = ruleta.evaluarResultado(numeroGirado, tipoApuestaEnum);
-        if (acierto) {
-            saldo += monto;
-            lblResultado.setText("¡GANASTE! Número: " + numeroGirado + ". Saldo: $" + saldo);
-        } else {
-            saldo -= monto;
-            lblResultado.setText("PERDISTE. Número: " + numeroGirado + ". Saldo: $" + saldo);
-        }
-
-        lblSaldo.setText("Saldo: $" + saldo);
-        Resultado resultado = new Resultado(numeroGirado, 0, monto, montoGanado, acierto);
-        resultadoController.guardarResultado(resultado);
+        lblSaldo.setText("Saldo; $" + juegoController.getSaldoActual());
+        String mensajeResultado = resultadoRonda.getGano() ?
+                "GANASTE numero: " + resultadoRonda.getNumeroGanador() + ", Saldo: $" + juegoController.getSaldoActual():
+                "PERDISTE numero: " + resultadoRonda.getNumeroGanador() + ", Saldo: $" + juegoController.getSaldoActual();
     }
 }
