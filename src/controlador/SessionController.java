@@ -25,18 +25,21 @@ public class SessionController {
     }
 
     private void cargarUsuario() {
+
+        List<Usuario> cargarusuarios = new ArrayList<>();
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(USUARIOS))) {
 
-            usuarios = (List<Usuario>) ois.readObject();
+            cargarusuarios = (List<Usuario>) ois.readObject();
             System.out.println("Usuarios cargados exitosamente desde " + USUARIOS);
+
+            this.usuarios  = cargarusuarios;
+
         } catch (FileNotFoundException e) {
 
             System.out.println("Archivo de usuarios no encontrado. Se creará uno nuevo al guardar.");
         } catch (IOException | ClassNotFoundException e) {
-
             e.printStackTrace();
             System.err.println("Error al cargar los usuarios. Usando lista vacía.");
-            usuarios = new ArrayList<>();
         }
     }
 

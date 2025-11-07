@@ -40,13 +40,14 @@ public class VentanaJuego extends JFrame {
         this.sessionController = sessionController;
         this.resultadoController = resultadoController;
 
-        this.juegoController = new JuegoController(1000, resultadoController);
+        this.juegoController = new JuegoController(resultadoController, sessionController);
 
         initComponents();
         setupLayout();
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
+
     }
 
     private void initComponents() {

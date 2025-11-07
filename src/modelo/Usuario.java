@@ -20,6 +20,7 @@ public class Usuario implements Serializable {
         this.username = username;
         this.password = password;
         this.nombre = nombre;
+        this.saldo = 1000.0;
     }
 
     public boolean validarCredenciales(String u, String p) {

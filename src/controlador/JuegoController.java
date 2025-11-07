@@ -4,29 +4,34 @@ import modelo.Ruleta;
 
 import modelo.Resultado;
 import modelo.ApuestaBase;
+import modelo.Usuario;
 
 public class JuegoController {
 
     private final Ruleta ruleta;
-    private final ResultadoController resultadoController; // Necesitamos este para guardar el historial
-    private int saldoActual;
+    private final ResultadoController resultadoController;
+    private SessionController sessionController;
 
-    public JuegoController(int saldoInicial, ResultadoController resultadoController) {
+
+    public JuegoController(ResultadoController resultadoController, SessionController sessionController) {
         this.ruleta = new Ruleta();
-        this.saldoActual = saldoInicial;
-        this.resultadoController = resultadoController; // Asignar el resultadoController
+        this.sessionController = sessionController;
+        this.resultadoController = resultadoController;
     }
 
     public double getSaldoActual() {
-        return saldoActual;
+        Usuario usuario = sessionController.getUsuarioActual();
+        return (usuario != null) ? usuario.getSaldo() : 0.0;
     }
 
     public Resultado ejecutarRonda(ApuestaBase apuesta) {
+
+        Usuario usuario = sessionController.getUsuarioActual();
         double montoApostado = apuesta.getMontoApostado();
 
 
 
-        if (montoApostado <= 0 || montoApostado > saldoActual) {
+        if (montoApostado <= 0 || montoApostado > usuario.getSaldo()) {
             throw new  IllegalArgumentException("Monto no valido");
         }
 
@@ -37,11 +42,11 @@ public class JuegoController {
         double montoGanado = 0;
 
         if (acierto) {
-            montoGanado = montoApostado;
-            montoGanado += montoApostado;
+            montoGanado = montoApostado * 2;
+            usuario.setSaldo(usuario.getSaldo() + montoGanado);
+
         } else {
-            saldoActual -= montoApostado;
-            montoGanado = 0;
+            usuario.setSaldo(usuario.getSaldo() - montoApostado);
         }
 
 
