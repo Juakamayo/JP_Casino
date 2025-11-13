@@ -89,7 +89,7 @@ public class SessionController {
             System.out.println("Historial de " + usuario.getUsername() + " cargado exitosamente.");
         } catch (FileNotFoundException e) {
 
-            System.out.println("Historial no encontrado para " + usuario.getUsername() + ". Se usará historial vacío.");
+            System.out.println("Historial no encontrado para " + usuario.getUsername() + ". Se usara historial vacío.");
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error al cargar historial para " + usuario.getUsername() + ": " + e.getMessage());
             e.printStackTrace();
