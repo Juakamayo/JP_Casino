@@ -10,7 +10,7 @@ public class Launcher {
         SessionController sessionController = new SessionController();
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            sessionController.guardarUsuarios();
+            sessionController.guardarDatosSesion();
         }));
 
         SwingUtilities.invokeLater(() -> {

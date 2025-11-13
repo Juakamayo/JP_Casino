@@ -43,6 +43,16 @@ public class Usuario implements Serializable {
         this.saldo = saldo;
     }
 
+    public void setHistorial(List<Resultado> newHistorial) {
+        this.historial.clear();
+        this.historial.addAll(newHistorial);
+    }
+
+
+    public String getPassword() {
+        return password;
+    }
+
 
     public void agregarResultado(Resultado r) {
 
