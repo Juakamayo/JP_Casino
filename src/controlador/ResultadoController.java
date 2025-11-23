@@ -1,5 +1,6 @@
 package controlador;
 
+import modelo.Estadisticas;
 import modelo.Resultado;
 import modelo.Usuario;
 import java.util.List;
@@ -20,6 +21,11 @@ public class ResultadoController {
         if (usuario != null) {
             usuario.agregarResultado(resultado);
         }
+    }
+
+    public Estadisticas calcularEstadisticas(){
+        List<Resultado> historial = recuperarHistorial();
+        return new Estadisticas(historial);
     }
 
     public List<Resultado> recuperarHistorial(){

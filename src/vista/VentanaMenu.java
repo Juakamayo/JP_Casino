@@ -47,11 +47,12 @@ public class VentanaMenu extends JFrame {
         JLabel lblBienvenida = new JLabel("Bienvenido/a, " + nombreUsuario, SwingConstants.CENTER);
         lblBienvenida.setFont(new Font("Arial", Font.BOLD, 16));
 
-        JPanel panelBotones = new JPanel(new GridLayout(3, 1, 10, 10));
+        JPanel panelBotones = new JPanel(new GridLayout(4, 1, 10, 10));
         panelBotones.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
 
         JButton btnJugar = new JButton("Jugar Ruleta");
         JButton btnHistorial = new JButton("Historial");
+        JButton btnEstadisticas = new JButton("Estadisticas");
         JButton btnSalir = new JButton("Cerrar Sesión");
 
 
@@ -74,10 +75,17 @@ public class VentanaMenu extends JFrame {
             new VentanaHistorial(this, this.nombreUsuario, resultadoController);
         });
 
+        btnEstadisticas.addActionListener(e -> {
+
+            new VentanaEstadisticas(this, resultadoController);
+        });
+
 
         panelBotones.add(btnJugar);
         panelBotones.add(btnHistorial);
+        panelBotones.add(btnEstadisticas);
         panelBotones.add(btnSalir);
+
 
         add(lblBienvenida, BorderLayout.NORTH);
         add(panelBotones, BorderLayout.CENTER);

@@ -2,6 +2,7 @@ package vista;
 
 import controlador.ResultadoController;
 import modelo.Resultado;
+import modelo.TipoApuesta;
 
 import javax.swing.*;
 import java.awt.*;
@@ -67,7 +68,7 @@ public class VentanaHistorial extends JDialog {
 
         if (historial.isEmpty()) {
 
-            listModel.addElement(new Resultado(0, 0, 0, 0, false) {
+            listModel.addElement(new Resultado(0, 0, 0, 0, false, TipoApuesta.ROJO) {
                 public String toString() { return "Aún no tienes jugadas registradas."; }
             });
             return;

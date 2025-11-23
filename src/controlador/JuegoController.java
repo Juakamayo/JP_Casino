@@ -1,20 +1,19 @@
 package controlador;
 
-import modelo.Ruleta;
+import modelo.*;
 
-import modelo.Resultado;
-import modelo.ApuestaBase;
-import modelo.Usuario;
 import vista.VentanaJuego;
 
 import javax.swing.*;
 import java.awt.*;
+import modelo.TipoApuesta;
 
 public class JuegoController extends Component {
 
     private final Ruleta ruleta;
     private final ResultadoController resultadoController;
     private SessionController sessionController;
+
 
 
     public JuegoController(ResultadoController resultadoController, SessionController sessionController) {
@@ -54,8 +53,10 @@ public class JuegoController extends Component {
             usuario.setSaldo(usuario.getSaldo() - montoApostado);
         }
 
+        TipoApuesta tipoApuesta = TipoApuesta.valueOf(apuesta.getEtiqueta().toUpperCase());
 
-        Resultado resultado = new Resultado(numeroGirado, 0, montoApostado, montoGanado, acierto);
+
+        Resultado resultado = new Resultado(numeroGirado, 0, montoApostado, montoGanado, acierto, tipoApuesta);
 
         resultadoController.guardarResultado(resultado);
         return resultado;
